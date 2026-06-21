@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import AccountSettingsAccount from '@/views/pages/account-settings/AccountSettingsAccount.vue'
-import AccountSettingsBillingAndPlans from '@/views/pages/account-settings/AccountSettingsBillingAndPlans.vue'
-import AccountSettingsConnections from '@/views/pages/account-settings/AccountSettingsConnections.vue'
-import AccountSettingsNotification from '@/views/pages/account-settings/AccountSettingsNotification.vue'
 import AccountSettingsSecurity from '@/views/pages/account-settings/AccountSettingsSecurity.vue'
+import AccountSettingsNotification from '@/views/pages/account-settings/AccountSettingsNotification.vue'
 
 const route = useRoute()
 
@@ -12,11 +10,9 @@ const activeTab = ref(route.params.tab)
 
 // tabs
 const tabs = [
-  { title: 'Account', icon: 'mdi-account-outline', tab: 'account' },
-  { title: 'Security', icon: 'mdi-lock-open-outline', tab: 'security' },
-  { title: 'Billing & Plans', icon: 'mdi-bookmark-outline', tab: 'billing-plans' },
-  { title: 'Notifications', icon: 'mdi-bell-outline', tab: 'notification' },
-  { title: 'Connections', icon: 'mdi-link-variant', tab: 'connection' },
+  { title: 'الحساب', icon: 'mdi-account-outline', tab: 'account' },
+  { title: 'الأمان', icon: 'mdi-lock-open-outline', tab: 'security' },
+  { title: 'الإشعارات', icon: 'mdi-bell-outline', tab: 'notification' },
 ]
 </script>
 
@@ -56,19 +52,9 @@ const tabs = [
         <AccountSettingsSecurity />
       </VWindowItem>
 
-      <!-- Billing -->
-      <VWindowItem value="billing-plans">
-        <AccountSettingsBillingAndPlans />
-      </VWindowItem>
-
       <!-- Notification -->
       <VWindowItem value="notification">
         <AccountSettingsNotification />
-      </VWindowItem>
-
-      <!-- Connections -->
-      <VWindowItem value="connection">
-        <AccountSettingsConnections />
       </VWindowItem>
     </VWindow>
   </div>
