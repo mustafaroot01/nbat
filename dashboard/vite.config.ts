@@ -63,6 +63,14 @@ export default defineConfig({
       'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true,
+        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'if-function'],
+      },
+    },
+  },
   build: {
     chunkSizeWarningLimit: 5000,
     outDir: '../public/dashboard',
