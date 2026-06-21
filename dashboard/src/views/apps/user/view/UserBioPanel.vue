@@ -37,7 +37,7 @@ const openEditDialog = () => {
   editForm.value = {
     name: props.userData.name,
     phone: props.userData.phone,
-    governorate_id: props.userData.governorate_id
+    governorate_id: props.userData.governorate?.id ?? null
   }
   isEditDialogOpen.value = true
   if (!governorates.value.length) fetchGovernorates()

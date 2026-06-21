@@ -67,8 +67,8 @@ const fetchUsers = () => {
     page: options.value.page,
     itemsPerPage: options.value.itemsPerPage,
   }).then(response => {
-    userList.value = response.data.data.data
-    totalUsersCount.value = response.data.data.total
+    userList.value = response.data.users
+    totalUsersCount.value = response.data.totalUsers
     stats.value = response.data.stats || {}
   }).catch(error => {
     console.error(error)

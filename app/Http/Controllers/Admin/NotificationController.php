@@ -47,11 +47,12 @@ class NotificationController extends Controller
         return $this->success(null, 'تم إرسال الإشعار');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $itemsPerPage = $request->get('itemsPerPage', 15);
         $logs = NotificationLog::with('admin')
             ->latest('created_at')
-            ->paginate(15);
+            ->paginate($itemsPerPage);
 
         return $this->paginated($logs);
     }

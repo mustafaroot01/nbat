@@ -12,8 +12,9 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'email' => $this->email,
             'phone' => $this->phone,
-            'photo' => $this->profile_photo
+            'profile_photo' => $this->profile_photo
                 ? asset('storage/' . $this->profile_photo)
                 : null,
             'governorate' => new GovernorateResource($this->whenLoaded('governorate')),
