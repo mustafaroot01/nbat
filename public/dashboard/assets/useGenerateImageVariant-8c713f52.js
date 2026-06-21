@@ -1,0 +1,1 @@
+import{t as l,P as o,Q as i}from"./index-39d3e015.js";const{skin:a}=l(),f=(t,n,s,u,e=!1)=>{const{global:r}=o();return i(()=>{if(r.name.value==="light")return a.value==="bordered"&&e?s:t;if(r.name.value==="dark")return a.value==="bordered"&&e?u:n})};export{f as u};
