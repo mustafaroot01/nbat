@@ -127,7 +127,7 @@ const renderMarkers = () => {
             <td><span style="background:${color};color:white;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;">${statusText}</span></td>
           </tr>
         </table>
-        <a href="/apps/plants?plant_id=${plant.id}"
+        <a href="/dashboard/apps/plants?plant_id=${plant.id}"
            style="display:block;margin-top:10px;text-align:center;background:#7367F0;color:white;padding:7px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:700;">
           🔍 عرض تفاصيل النبتة
         </a>
