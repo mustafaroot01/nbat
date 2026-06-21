@@ -7,7 +7,11 @@ Route::get('/dashboard/{any?}', function () {
     $path = public_path('dashboard/index.html');
 
     if (file_exists($path)) {
-        return file_get_contents($path);
+        return response(file_get_contents($path), 200)
+            ->header('Content-Type', 'text/html')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     return 'Dashboard not built yet. Run: cd dashboard && npm run build';
