@@ -11,7 +11,7 @@ const pollingInterval = ref<any>(null)
 
 const fetchNotifications = async () => {
   try {
-    const response = await axios.get('/admin-notifications')
+    const response = await axios.get('/admin/admin-notifications')
     const { notifications: data, unreadCount: count } = response.data.data
     
     notifications.value = data.map((n: any) => ({
@@ -33,7 +33,7 @@ const fetchNotifications = async () => {
 
 const removeNotification = async (notificationId: any) => {
   try {
-    await axios.delete(`/admin-notifications/${notificationId}`)
+    await axios.delete(`/admin/admin-notifications/${notificationId}`)
     notifications.value = notifications.value.filter(n => n.id !== notificationId)
   } catch (error) {
     console.error('Failed to delete notification', error)
@@ -42,7 +42,7 @@ const removeNotification = async (notificationId: any) => {
 
 const markRead = async (notificationIds: any[]) => {
   try {
-    await axios.post('/admin-notifications/mark-read', { ids: notificationIds })
+    await axios.post('/admin/admin-notifications/mark-read', { ids: notificationIds })
     notifications.value.forEach(item => {
       if (notificationIds.includes(item.id)) {
         item.isSeen = true
