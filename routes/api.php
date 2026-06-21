@@ -176,7 +176,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     // Reports
     Route::middleware('permission:read_reports')->get('reports', [\App\Http\Controllers\Admin\ReportController::class, 'index']);
     Route::middleware('permission:write_reports')->group(function () {
-        Route::post('reports/{report}/resolve', [\App\Http\Controllers\Admin\ReportController::class, 'resolve']);
+        Route::patch('reports/{report}/resolve', [\App\Http\Controllers\Admin\ReportController::class, 'resolve']);
     });
 
     // Admin Notifications
@@ -211,11 +211,9 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // Notifications
     Route::middleware('permission:read_notifications')->get('notifications', [NotificationController::class, 'index']);
+    Route::middleware('permission:create_notifications')->post('notifications/send', [NotificationController::class, 'send']);
     Route::middleware('permission:write_notifications')->post('notifications/{notification}', [NotificationController::class, 'update']);
-    Route::middleware('permission:create_notifications')->group(function () {
-        Route::post('notifications/send', [NotificationController::class, 'send']);
-        Route::delete('notifications/{notification}', [NotificationController::class, 'destroy']);
-    });
+    Route::middleware('permission:create_notifications')->delete('notifications/{notification}', [NotificationController::class, 'destroy']);
 
     // App Versions
     Route::middleware('permission:read_app_versions')->get('app-versions', [AppVersionController::class, 'index']);
@@ -243,6 +241,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     // Roles and Permissions
     Route::middleware('permission:read_roles')->get('roles', [RoleController::class, 'index']);
+    Route::middleware('permission:read_settings')->get('settings', [SettingController::class, 'index']);
     Route::middleware('permission:write_settings')->group(function () {
         Route::put('settings', [SettingController::class, 'update']);
         Route::post('settings', [SettingController::class, 'update']); 
