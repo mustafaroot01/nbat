@@ -27,12 +27,13 @@ const options = ref<Options>({
 
 // Headers
 const headers = [
-  { title: 'USER', key: 'user' },
-  { title: 'EMAIL', key: 'email' },
-  { title: 'ROLE', key: 'role' },
-  { title: 'PLAN', key: 'plan' },
-  { title: 'STATUS', key: 'status' },
-  { title: 'ACTION', key: 'actions', sortable: false },
+  { title: 'المستخدم', key: 'name' },
+  { title: 'رقم الهاتف / الايميل', key: 'contact' },
+  { title: 'المحافظة', key: 'governorate' },
+  { title: 'عدد النبتات', key: 'plants_count' },
+  { title: 'الحالة', key: 'is_active' },
+  { title: 'موثق؟', key: 'is_trusted' },
+  { title: 'الإجراءات', key: 'actions', sortable: false },
 ]
 
 // 👉 Fetching users
@@ -218,67 +219,67 @@ const deleteUser = (id: number) => {
         @update:options="options = $event"
       >
         <!-- User -->
-        <template #item.user="{ item }">
-          <div class="d-flex">
+        <template #item.name="{ item }">
+          <div class="d-flex align-center">
             <VAvatar
               size="34"
-              :variant="!item.raw.avatar ? 'tonal' : undefined"
-              :color="!item.raw.avatar ? resolveUserRoleVariant(item.raw.role).color : undefined"
+              color="primary"
+              variant="tonal"
               class="me-3"
             >
               <VImg
-                v-if="item.raw.avatar"
-                :src="item.raw.avatar"
+                v-if="item.raw.photo"
+                :src="item.raw.photo"
               />
-              <span v-else>{{ avatarText(item.raw.fullName) }}</span>
+              <span v-else>{{ avatarText(item.raw.name) }}</span>
             </VAvatar>
 
             <div class="d-flex flex-column">
-              <h6 class="text-sm">
-                <RouterLink
-                  :to="{ name: 'apps-user-view-id', params: { id: item.raw.id } }"
-                  class="font-weight-medium user-list-name"
-                >
-                  {{ item.raw.fullName }}
-                </RouterLink>
+              <h6 class="text-sm font-weight-medium">
+                {{ item.raw.name }}
               </h6>
-
-              <span class="text-xs text-medium-emphasis">@{{ item.raw.username }}</span>
             </div>
           </div>
         </template>
 
-        <!-- Email -->
-        <template #item.email="{ item }">
+        <!-- Contact -->
+        <template #item.contact="{ item }">
           <span class="text-sm">
-            {{ item.raw.email }}
+            {{ item.raw.phone || item.raw.email || 'غير متوفر' }}
           </span>
         </template>
 
-        <!-- Role -->
-        <template #item.role="{ item }">
-          <div class="d-flex gap-2">
-            <VIcon
-              :icon="resolveUserRoleVariant(item.raw.role).icon"
-              :color="resolveUserRoleVariant(item.raw.role).color"
-            />
-            <span class="text-capitalize">{{ item.raw.role }}</span>
-          </div>
+        <!-- Governorate -->
+        <template #item.governorate="{ item }">
+          <span class="text-sm">
+            {{ item.raw.governorate?.name_ar || 'غير محدد' }}
+          </span>
         </template>
 
-        <!-- Plan -->
-        <template #item.plan="{ item }">
-          <span class="text-capitalize text-high-emphasis">{{ item.raw.currentPlan }}</span>
+        <!-- Plants Count -->
+        <template #item.plants_count="{ item }">
+          <VChip color="success" density="comfortable">
+            {{ item.raw.plants_count }}
+          </VChip>
         </template>
 
         <!-- Status -->
-        <template #item.status="{ item }">
+        <template #item.is_active="{ item }">
           <VChip
-            :color="resolveUserStatusVariant(item.raw.status)"
+            :color="item.raw.is_active ? 'success' : 'secondary'"
             density="comfortable"
-            class="text-capitalize"
           >
-            {{ item.raw.status }}
+            {{ item.raw.is_active ? 'نشط' : 'موقوف' }}
+          </VChip>
+        </template>
+
+        <!-- Trusted -->
+        <template #item.is_trusted="{ item }">
+          <VChip
+            :color="item.raw.is_trusted ? 'info' : 'warning'"
+            density="comfortable"
+          >
+            {{ item.raw.is_trusted ? 'موثق' : 'عادي' }}
           </VChip>
         </template>
 

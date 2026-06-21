@@ -65,7 +65,10 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => UserResource::collection($users)->resolve(),
+            'users' => UserResource::collection($users)->resolve(),
+            'totalPage' => $users->lastPage(),
+            'totalUsers' => $users->total(),
+            'page' => $users->currentPage(),
             'stats' => $stats,
         ]);
     }
