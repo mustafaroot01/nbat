@@ -158,6 +158,8 @@ const fetchPlants = () => {
         map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 })
       }
     }
+  }).catch(() => {
+    plants.value = []
   }).finally(() => {
     loading.value = false
   })
@@ -166,6 +168,8 @@ const fetchPlants = () => {
 const fetchGovernorates = () => {
   settingStore.fetchGovernorates().then(r => {
     governorates.value = r.data.data
+  }).catch(() => {
+    governorates.value = []
   })
 }
 

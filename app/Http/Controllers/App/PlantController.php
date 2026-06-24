@@ -69,6 +69,10 @@ class PlantController extends Controller
             return $this->error('غير مصرح', 403);
         }
 
+        if ($plant->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($plant->image);
+        }
+
         $plant->delete();
 
         return $this->success(null, 'تم حذف النبتة');

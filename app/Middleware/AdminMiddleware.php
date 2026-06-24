@@ -18,6 +18,14 @@ class AdminMiddleware
             ], 403);
         }
 
+        if (!$request->user()->is_active) {
+            return response()->json([
+                'success' => false,
+                'message' => 'تم إيقاف حسابك، تواصل مع المشرف العام',
+                'data' => null,
+            ], 403);
+        }
+
         return $next($request);
     }
 }

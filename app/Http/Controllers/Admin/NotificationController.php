@@ -68,6 +68,9 @@ class NotificationController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            if ($notification->image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($notification->image);
+            }
             $imagePath = $request->file('image')->store('notifications', 'public');
             $notification->image = $imagePath;
         }
@@ -83,6 +86,10 @@ class NotificationController extends Controller
 
     public function destroy(NotificationLog $notification)
     {
+        if ($notification->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($notification->image);
+        }
+
         $notification->delete();
 
         return $this->success(null, 'تم الحذف بنجاح');

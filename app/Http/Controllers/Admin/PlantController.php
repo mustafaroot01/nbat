@@ -81,6 +81,10 @@ class PlantController extends Controller
 
     public function destroy(Plant $plant)
     {
+        if ($plant->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($plant->image);
+        }
+
         $plant->delete();
 
         return $this->success(null, 'تم حذف النبتة');

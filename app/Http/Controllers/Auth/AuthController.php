@@ -72,6 +72,17 @@ class AuthController extends Controller
         return $this->success(null, 'تم تغيير كلمة السر بنجاح');
     }
 
+    public function refresh(Request $request)
+    {
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
+        $token = $user->createToken('user-token', ['*'], now()->addDays(30))->plainTextToken;
+
+        return $this->success([
+            'token' => $token,
+        ], 'تم تجديد التوكن بنجاح');
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

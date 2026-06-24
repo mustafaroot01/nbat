@@ -7,6 +7,7 @@ use App\Http\Resources\ScreenAdResource;
 use App\Models\ScreenAd;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ScreenAdController extends Controller
 {
@@ -47,10 +48,13 @@ class ScreenAdController extends Controller
     public function update(Request $request, ScreenAd $screenAd)
     {
         $request->validate([
-            'image' => 'required|image|max:5120',
+            'image' => 'nullable|image|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
+            if ($screenAd->image) {
+                Storage::disk('public')->delete($screenAd->image);
+            }
             $path = $request->file('image')->store('screen_ads', 'public');
             $screenAd->image = $path;
             $screenAd->save();
@@ -61,6 +65,10 @@ class ScreenAdController extends Controller
 
     public function destroy(ScreenAd $screenAd)
     {
+        if ($screenAd->image) {
+            Storage::disk('public')->delete($screenAd->image);
+        }
+
         $screenAd->delete();
 
         return $this->success(null, 'تم حذف الإعلان');

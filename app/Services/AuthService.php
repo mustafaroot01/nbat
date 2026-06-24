@@ -20,7 +20,7 @@ class AuthService
             return null;
         }
 
-        $token = $user->createToken('user-token')->plainTextToken;
+        $token = $user->createToken('user-token', ['*'], now()->addDays(30))->plainTextToken;
 
         return [
             'token' => $token,
@@ -35,7 +35,7 @@ class AuthService
         }
 
         $user = User::create($data);
-        $token = $user->createToken('user-token')->plainTextToken;
+        $token = $user->createToken('user-token', ['*'], now()->addDays(30))->plainTextToken;
 
         return [
             'token' => $token,
@@ -55,7 +55,7 @@ class AuthService
             return null;
         }
 
-        $token = $admin->createToken('admin-token')->plainTextToken;
+        $token = $admin->createToken('admin-token', ['*'], now()->addHours(8))->plainTextToken;
 
         $adminData = $admin->toArray();
         $roleName = $admin->roles->first()?->name ?? 'admin';

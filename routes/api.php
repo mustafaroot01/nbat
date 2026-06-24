@@ -103,6 +103,7 @@ Route::get('blog', [\App\Http\Controllers\App\BlogController::class, 'index']);
 Route::middleware(['auth:sanctum', 'maintenance'])->group(function () {
 
     Route::post('auth/logout', [AuthController::class, 'logout']);
+    Route::post('auth/refresh', [AuthController::class, 'refresh']);
 
     // Profile
     Route::get('profile', [ProfileController::class, 'show']);
@@ -239,8 +240,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
         Route::delete('campaigns/{campaign}', [\App\Http\Controllers\Admin\CampaignController::class, 'destroy']);
     });
 
-    // Roles and Permissions
-    Route::middleware('permission:read_roles')->get('roles', [RoleController::class, 'index']);
+    // Settings
     Route::middleware('permission:read_settings')->get('settings', [SettingController::class, 'index']);
     Route::middleware('permission:write_settings')->group(function () {
         Route::put('settings', [SettingController::class, 'update']);

@@ -106,6 +106,8 @@ onMounted(() => {
     statCards.value[4].stats = data.total_reports.toString()
     statCards.value[5].stats = data.pending_reports.toString()
     statCards.value[6].stats = data.resolved_reports.toString()
+  }).catch(() => {
+    // keep default zeros on error
   })
 })
 </script>

@@ -7,6 +7,7 @@ use App\Http\Resources\BannerResource;
 use App\Models\Banner;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -54,6 +55,9 @@ class BannerController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            if ($banner->image) {
+                Storage::disk('public')->delete($banner->image);
+            }
             $path = $request->file('image')->store('banners', 'public');
             $banner->image = $path;
         }
@@ -69,6 +73,10 @@ class BannerController extends Controller
 
     public function destroy(Banner $banner)
     {
+        if ($banner->image) {
+            Storage::disk('public')->delete($banner->image);
+        }
+
         $banner->delete();
 
         return $this->success(null, 'تم حذف البنر');
