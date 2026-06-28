@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // Dashboard SPA — serves built Vue.js app
-Route::get('/dashboard/{any?}', function () {
+$dashboardResponse = function () {
     $path = public_path('dashboard/index.html');
 
     if (file_exists($path)) {
@@ -15,7 +15,10 @@ Route::get('/dashboard/{any?}', function () {
     }
 
     return 'Dashboard not built yet. Run: cd dashboard && npm run build';
-})->where('any', '.*');
+};
+
+Route::get('/dashboard', $dashboardResponse);
+Route::get('/dashboard/{any}', $dashboardResponse)->where('any', '.+');
 
 Route::get('/', function () {
     return redirect('/dashboard');
