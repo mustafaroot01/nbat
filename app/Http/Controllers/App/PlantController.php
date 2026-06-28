@@ -26,6 +26,11 @@ class PlantController extends Controller
     {
         $data = $request->validated();
 
+        $governorate = \App\Models\Governorate::find($data['governorate_id']);
+        if (!$governorate || !$governorate->is_covered) {
+            return $this->error('عذراً، هذه المحافظة خارج نطاق التغطية حالياً', 403);
+        }
+
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('plants', 'public');
         }
